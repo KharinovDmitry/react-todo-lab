@@ -3,6 +3,7 @@ import styled, { css } from "styled-components"
 import {TodoItemContainer} from './TodoItemContainer'
 import {TodoItemCheckbox} from './TodoItemCheckbox';
 import {useDeleteTodoItem} from "../../data/hooks/useData";
+import {PrioritySelector} from "./TodoItemPriority";
 
 const checkedCss = css`
   color: #B5B5BA;
@@ -27,7 +28,7 @@ const Delete = styled.span`
   cursor: pointer;
 `;
 
-export const TodoItem = ({id, title, checked}) => {
+export const TodoItem = ({id, title, checked, priority}) => {
     const {mutate} = useDeleteTodoItem();
 
     const deleteHandler = () => {
@@ -42,6 +43,7 @@ export const TodoItem = ({id, title, checked}) => {
       <Title checked={checked}>
         {title}
       </Title>
+      <PrioritySelector id={id} priority={priority}/>
       <Delete onClick={deleteHandler}/>
     </TodoItemContainer>
   )

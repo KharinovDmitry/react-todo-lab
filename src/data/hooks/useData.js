@@ -72,3 +72,25 @@ export const useSwitchCheckboxTodoItem = () => {
     mutate
   }
 }
+
+export const useChangePriorityTodoItem = () => {
+  const client = useQueryClient();
+
+  const {mutate} = useMutation({
+    mutationFn:async ({id, priority}) => {
+      let items = await LocalStorage.getTodoItemsFromLocalStorage()
+      const item = items.find(item => item.id === id);
+
+      item.priority = priority
+
+      return LocalStorage.updateTodoItemInLocalStorage(item)
+    },
+    onSuccess: () => {
+      client.invalidateQueries(['todo']);
+    },
+  });
+
+  return {
+    mutate
+  }
+}

@@ -24,6 +24,8 @@ export const CheckboxContainer = styled.span(props => {
     cursor: pointer;
     ${props.disabled ? disabledCss : ''}
     ${props.checked ? checkedCss : ''}
+    overflow-wrap: break-word;
+    max-width: 70%; 
   `;
 });
 

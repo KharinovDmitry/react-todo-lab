@@ -2,6 +2,7 @@ import React from 'react';
 import styled, { css } from "styled-components"
 import {TodoItemContainer} from './TodoItemContainer'
 import {TodoItemCheckbox} from './TodoItemCheckbox';
+import {useDeleteTodoItem} from "../../data/hooks/useData";
 
 const checkedCss = css`
   color: #B5B5BA;
@@ -26,14 +27,22 @@ const Delete = styled.span`
   cursor: pointer;
 `;
 
-export const TodoItem = ({title, checked}) => {
+export const TodoItem = ({id, title, checked}) => {
+    const {mutate} = useDeleteTodoItem();
+
+    const deleteHandler = () => {
+        if(window.confirm("Точно? Не откладывай")) {
+            mutate({id: id})
+        }
+    }
+
   return (
     <TodoItemContainer>
       <TodoItemCheckbox checked={checked} />
       <Title checked={checked}>
         {title}
       </Title>
-      <Delete />
+      <Delete onClick={deleteHandler}/>
     </TodoItemContainer>
   )
 }

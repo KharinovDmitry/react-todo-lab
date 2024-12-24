@@ -31,5 +31,16 @@ export const LocalStorage = {
         resolve();
       })
     });
-  }
+  },
+
+  deleteTodoItemFromLocalStorage: (todoItemId) => {
+    return new Promise((resolve, reject) => {
+      const rawData = localStorage.getItem(TODO_ITEMS_LOCAL_STORAGE_KEY);
+      const data = JSON.parse(rawData);
+
+      const newTodoItems = data.filter((item) => item.id !== todoItemId)
+      localStorage.setItem(TODO_ITEMS_LOCAL_STORAGE_KEY, JSON.stringify(newTodoItems));
+      resolve();
+    });
+  },
 }

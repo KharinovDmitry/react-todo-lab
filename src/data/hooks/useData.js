@@ -50,3 +50,25 @@ export const useDeleteTodoItem = () => {
     mutate
   }
 }
+
+export const useSwitchCheckboxTodoItem = () => {
+  const client = useQueryClient();
+
+  const {mutate} = useMutation({
+    mutationFn:async ({id}) => {
+      let items = await LocalStorage.getTodoItemsFromLocalStorage()
+      const item = items.find(item => item.id === id);
+
+      item.isDone = !item.isDone
+
+      return LocalStorage.updateTodoItemInLocalStorage(item)
+    },
+    onSuccess: () => {
+      client.invalidateQueries(['todo']);
+    },
+  });
+
+  return {
+    mutate
+  }
+}
